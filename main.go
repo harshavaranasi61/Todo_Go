@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"gorm.io/gorm"
 )
 
@@ -39,6 +40,18 @@ func addNewTodo(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewDecoder(r.Body).Decode(&todo)
 
 	db.Create(&todo)
+	json.NewEncoder(w).Encode(todo)
+}
+
+func completeTodo(w http.ResponseWriter, r *http.Request) {
+	db := dbConfig()
+	fmt.Println("Endpoint Hit: completeTodo")
+
+	var todo Todo
+	params := mux.Vars(r)
+	db.Where("id = ?", params["id"]).Find(&todo)
+	todo.Status = "Completed"
+	db.Save(&todo)
 	json.NewEncoder(w).Encode(todo)
 }
 

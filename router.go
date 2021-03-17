@@ -10,6 +10,6 @@ func Router() *mux.Router {
 	router.HandleFunc("/", homepage).Methods("GET")
 	router.HandleFunc("/todos", returnAllTodos).Methods("GET")
 	router.HandleFunc("/todos/add", addNewTodo).Methods("POST")
-
+	router.HandleFunc("/todos/complete/{id}", completeTodo).Methods("PUT")
 	return router
 }
