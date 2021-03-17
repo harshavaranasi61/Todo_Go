@@ -31,19 +31,25 @@ func returnAllTodos(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func addNewTodo(w http.ResponseWriter, r *http.Request) {
+	db := dbConfig()
+	fmt.Println("Endpoint Hit: addNewTodo")
+
+	var todo Todo
+	_ = json.NewDecoder(r.Body).Decode(&todo)
+
+	db.Create(&todo)
+	json.NewEncoder(w).Encode(todo)
+}
+
 func handleRequests() {
 	router := Router()
-	//http.HandleFunc("/todo/add", addTodo)
 	fmt.Println("Listening on port 8081")
 	log.Fatal(http.ListenAndServe(":8081", router))
 
 }
 
 func main() {
-	db := dbConfig()
-
-	firstTodo := Todo{Title: "Sleep", Status: "false"}
-	result := db.Create(&firstTodo)
-	fmt.Println(firstTodo.ID, result)
+	dbConfig()
 	handleRequests()
 }
