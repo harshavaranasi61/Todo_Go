@@ -55,6 +55,18 @@ func completeTodo(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(todo)
 }
 
+func undoCompleteTodo(w http.ResponseWriter, r *http.Request) {
+	db := dbConfig()
+	fmt.Println("Endpoint Hit: completeTodo")
+
+	var todo Todo
+	params := mux.Vars(r)
+	db.Where("id = ?", params["id"]).Find(&todo)
+	todo.Status = "False"
+	db.Save(&todo)
+	json.NewEncoder(w).Encode(todo)
+}
+
 func handleRequests() {
 	router := Router()
 	fmt.Println("Listening on port 8081")

@@ -11,5 +11,6 @@ func Router() *mux.Router {
 	router.HandleFunc("/todos", returnAllTodos).Methods("GET")
 	router.HandleFunc("/todos/add", addNewTodo).Methods("POST")
 	router.HandleFunc("/todos/complete/{id}", completeTodo).Methods("PUT")
+	router.HandleFunc("/todos/undo/{id}", undoCompleteTodo).Methods("PUT")
 	return router
 }
