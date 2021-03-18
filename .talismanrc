@@ -1,3 +1,5 @@
 fileignoreconfig:
 - filename: go.sum
   checksum: 867b4f39b1a7f26d471ec8c731ace7d87ab856f8ad4ff113da23ff80e98810b3
+- filename: dbConfig.go
+  checksum: 4c2ec8dade5263acb43d032cca414b90cd0dcf36d99c0b986a3b31aa279ac5b5
